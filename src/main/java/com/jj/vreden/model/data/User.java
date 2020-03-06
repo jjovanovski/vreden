@@ -1,5 +1,7 @@
 package com.jj.vreden.model.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jj.vreden.model.BoardCategory;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,6 +34,10 @@ public class User implements UserDetails {
     private boolean enabled;
 
     private String roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<BoardCategory> boardCategories;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
