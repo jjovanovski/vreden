@@ -23,7 +23,7 @@ public class UserController {
     public JwtResponse login(@RequestParam  String username, @RequestParam String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-        String jwt = JWTUtil.generateJwtToken(authentication.getName(), null, 60*10);
+        String jwt = JWTUtil.generateJwtToken(authentication.getName(), null, 60*60*24);
         return new JwtResponse(jwt);
     }
 
