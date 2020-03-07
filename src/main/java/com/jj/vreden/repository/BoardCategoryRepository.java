@@ -1,6 +1,6 @@
 package com.jj.vreden.repository;
 
-import com.jj.vreden.model.BoardCategory;
+import com.jj.vreden.model.data.BoardCategory;
 import com.jj.vreden.model.data.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

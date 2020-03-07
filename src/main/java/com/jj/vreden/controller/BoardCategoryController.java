@@ -1,6 +1,6 @@
 package com.jj.vreden.controller;
 
-import com.jj.vreden.model.BoardCategory;
+import com.jj.vreden.model.data.BoardCategory;
 import com.jj.vreden.model.data.User;
 import com.jj.vreden.repository.BoardCategoryRepository;
 import com.jj.vreden.repository.UserRepository;
@@ -16,47 +16,31 @@ import java.util.List;
 public class BoardCategoryController {
 
     @Autowired
-    private BoardCategoryRepository boardCategoryRepository;
-
-    @Autowired
     private BoardCategoryService boardCategoryService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @GetMapping
-    public List<BoardCategory> getBoardCategories(Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
-        return boardCategoryRepository.findAllByUser(user);
+    public List<BoardCategory> getBoardCategories() {
+        return boardCategoryService.get();
     }
 
     @GetMapping(path = "/{id}")
     public BoardCategory getBoardCategory(@PathVariable long id) {
-        return boardCategoryService.getBoardCategory(id);
+        return boardCategoryService.get(id);
     }
 
     @PostMapping
-    public BoardCategory postBoardCategory(Principal principal, @RequestParam String name) {
-        User user = userRepository.findByUsername(principal.getName());
-        BoardCategory boardCategory = new BoardCategory();
-        boardCategory.setName(name);
-        boardCategory.setUser(user);
-
-        return boardCategoryRepository.save(boardCategory);
+    public BoardCategory postBoardCategory(@RequestParam String name) {
+        return boardCategoryService.post(name);
     }
 
     @PutMapping(path = "/{id}")
     public BoardCategory putBoardCategory(@PathVariable long id, @RequestParam String name) {
-        BoardCategory boardCategory = boardCategoryService.getBoardCategory(id);
-        boardCategory.setName(name);
-
-        return boardCategoryRepository.save(boardCategory);
+        return boardCategoryService.put(id, name);
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteBoardCategory(Principal principal, @PathVariable long id) {
-        BoardCategory boardCategory = boardCategoryService.getBoardCategory(id);
-        boardCategoryRepository.delete(boardCategory);
+    public void deleteBoardCategory(@PathVariable long id) {
+        boardCategoryService.delete(id);
     }
 
 }

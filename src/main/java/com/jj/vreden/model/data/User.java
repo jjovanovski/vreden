@@ -1,7 +1,6 @@
 package com.jj.vreden.model.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jj.vreden.model.BoardCategory;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +37,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<BoardCategory> boardCategories;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Board> boards;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
