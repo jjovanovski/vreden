@@ -1,10 +1,12 @@
 package com.jj.vreden.controller;
 
+import com.jj.vreden.configuration.SecurityConfiguration;
 import com.jj.vreden.model.data.Board;
 import com.jj.vreden.repository.BoardRepository;
 import com.jj.vreden.repository.UserRepository;
 import com.jj.vreden.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

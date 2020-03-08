@@ -26,6 +26,7 @@ public class Label {
     private Board board;
 
     @ManyToMany(mappedBy = "labels")
+    @JsonIgnore
     private List<Card> cards;
 
 }

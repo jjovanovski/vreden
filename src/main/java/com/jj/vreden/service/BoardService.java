@@ -16,6 +16,9 @@ import java.util.List;
 public class BoardService extends UserService {
 
     @Autowired
+    private BoardService proxy;
+
+    @Autowired
     private BoardRepository boardRepository;
 
     @Autowired
@@ -46,7 +49,7 @@ public class BoardService extends UserService {
     public Board put(long id, String name, long categoryId) {
         BoardCategory boardCategory = boardCategoryService.get(categoryId);
 
-        Board board = get(id);
+        Board board = proxy.get(id);
         board.setName(name);
         board.setBoardCategory(boardCategory);
 
@@ -54,7 +57,7 @@ public class BoardService extends UserService {
     }
 
     public void delete(long id) {
-        Board board = get(id);
+        Board board = proxy.get(id);
         boardRepository.delete(board);
     }
 

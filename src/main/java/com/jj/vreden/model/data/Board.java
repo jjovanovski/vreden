@@ -28,9 +28,11 @@ public class Board {
     private BoardCategory boardCategory;
 
     @OneToMany(mappedBy = "board",  cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<BoardList> boardLists;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Label> labels;
 
 }

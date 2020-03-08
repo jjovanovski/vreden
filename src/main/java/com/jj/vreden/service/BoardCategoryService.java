@@ -16,6 +16,9 @@ import java.util.Optional;
 public class BoardCategoryService extends UserService {
 
     @Autowired
+    private BoardCategoryService proxy;
+
+    @Autowired
     private BoardCategoryRepository boardCategoryRepository;
 
     public List<BoardCategory> get() {
@@ -24,9 +27,9 @@ public class BoardCategoryService extends UserService {
 
     @PostAuthorize(SecurityConfiguration.PRIVATE_USER_RESOURCE)
     public BoardCategory get(long id) {
-        Optional<BoardCategory> boardCategoryOptional = boardCategoryRepository.findById(id);
-        boardCategoryOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, null));
-        return boardCategoryOptional.get();
+        BoardCategory boardCategoryOptional = boardCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, null));
+        return boardCategoryOptional;
     }
 
     public BoardCategory post(String name) {
@@ -38,14 +41,14 @@ public class BoardCategoryService extends UserService {
     }
 
     public BoardCategory put(long id, String name) {
-        BoardCategory boardCategory = get(id);
+        BoardCategory boardCategory = proxy.get(id);
         boardCategory.setName(name);
 
         return boardCategoryRepository.save(boardCategory);
     }
 
     public void delete(long id) {
-        BoardCategory boardCategory = get(id);
+        BoardCategory boardCategory = proxy.get(id);
         boardCategoryRepository.delete(boardCategory);
     }
 }
