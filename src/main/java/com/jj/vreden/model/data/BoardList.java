@@ -26,6 +26,7 @@ public class BoardList {
     private Board board;
 
     @OneToMany(mappedBy = "boardList", cascade = CascadeType.ALL)
+    @OrderBy("orderInBoardList")
     private List<Card> cards;
 
 }

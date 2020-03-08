@@ -5,6 +5,7 @@ import com.jj.vreden.model.data.BoardList;
 import com.jj.vreden.repository.BoardListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,6 +27,7 @@ public class BoardListService {
         return boardListRepository.findAllByBoardOrderByOrderInBoard(boardService.get(boardId));
     }
 
+    //@PostAuthorize("returnObject.board.user == authentication.name")
     public BoardList get(long id) {
         BoardList boardList = boardListRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, null));
@@ -61,7 +63,7 @@ public class BoardListService {
     }
 
     public void reorder(long id, long idAfter, long idBefore) {
-        BoardList boardList = get(id);
+        BoardList boardList = proxy.get(id);
         BoardList boardListAfter = null;
         BoardList boardListBefore = null;
 
