@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Board {
+public class BoardList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +18,14 @@ public class Board {
     @NotNull
     private String name;
 
+    private float orderInBoard;
+
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    private User user;
+    private Board board;
 
-    @ManyToOne
-    @JoinColumn
-    private BoardCategory boardCategory;
-
-    @OneToMany(mappedBy = "board",  cascade = CascadeType.ALL)
-    private List<BoardList> boardLists;
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<Label> labels;
+    @OneToMany(mappedBy = "boardList", cascade = CascadeType.ALL)
+    private List<Card> cards;
 
 }

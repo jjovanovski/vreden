@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Board {
+public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +18,21 @@ public class Board {
     @NotNull
     private String name;
 
+    private String description;
+
+    private float orderInBoardList;
+
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    private User user;
+    private BoardList boardList;
 
-    @ManyToOne
-    @JoinColumn
-    private BoardCategory boardCategory;
-
-    @OneToMany(mappedBy = "board",  cascade = CascadeType.ALL)
-    private List<BoardList> boardLists;
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "card_labels",
+            joinColumns = @JoinColumn(name = "card_id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id")
+    )
     private List<Label> labels;
 
 }
